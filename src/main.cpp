@@ -25,9 +25,9 @@ int main(int argc, char** argv)
 	{
 		std::cout << argv[1] << std::endl;
 		
-		if ((argv[1] == "e" || argv[1] == "d") && argc == 4)
+		if ((!strcmp(argv[1], "e") || !strcmp(argv[1], "d")) && argc == 4)
 		{
-			if (argv[1] == "e")
+			if (!strcmp(argv[1], "e"))
 				operation = ENCRYPT;
 			else
 				operation = DECRYPT;
@@ -35,13 +35,13 @@ int main(int argc, char** argv)
 			text = argv[3];
 		}
 
-		else if (argv[1] == "c" && argc == 2)
+		else if (!strcmp(argv[1], "c") && argc == 2)
 		{
 			operation = CREATE_KEY;
 			key = "key.txt";
 		}
 
-		else if (argv[1] == "c" && argc == 3)
+		else if (!strcmp(argv[1], "c") && argc == 3)
 		{
 			operation = CREATE_KEY;
 			key = argv[2];
