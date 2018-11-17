@@ -79,6 +79,8 @@ int main(int argc, char** argv)
 	std::cout << "Operation: " << operation_str << std::endl;
 	std::cout << "Key:       " << key << std::endl;
 	std::cout << "Text:      " << text << std::endl;
+
+	// Handle operations
 	
 	return 0;
 }
