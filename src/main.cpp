@@ -4,6 +4,8 @@
 
 #include "operation.h"
 
+#include "file_io/key_file_io.h"
+
 int main(int argc, char** argv)
 {
 	// Startup:
@@ -81,6 +83,14 @@ int main(int argc, char** argv)
 	std::cout << "Text:      " << text << std::endl;
 
 	// Handle operations
+
+	if (operation == ENCRYPT)
+	{
+		Symbol* symbols = readKey(key.c_str());
+
+		for (int i = 0; i < 26; i++)
+			std::cout << *(symbols + i)->code << std::endl;
+	}
 	
 	return 0;
 }
