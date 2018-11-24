@@ -86,10 +86,13 @@ int main(int argc, char** argv)
 
 	if (operation == ENCRYPT)
 	{
-		Symbol* symbols = readKey(key.c_str());
+		std::vector<Symbol> symbols;
+		symbols = readKey(key.c_str());
+		if (symbols.size() < 26)
+			return 1;
 
 		for (int i = 0; i < 26; i++)
-			std::cout << *(symbols + i)->code << std::endl;
+			std::cout << symbols.at(i).code << std::endl;
 	}
 	
 	return 0;

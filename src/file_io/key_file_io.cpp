@@ -1,8 +1,9 @@
 #include "key_file_io.h"
 
-Symbol* readKey(const char* key_path)
+std::vector<Symbol> readKey(const char* key_path)
 {
-	Symbol symbols[26];	// For now it's 26 (the amount of letters in the alpabet), but it will be bigger because of numbers, special symbols, etc
+	std::vector<Symbol> symbols;
+	symbols.reserve(26); // For now it's 26 (the amount of letters in the alpabet), but it will be bigger because of numbers, special symbols, etc
 	
 	std::string line;
   	std::ifstream file_reader(key_path);
@@ -14,14 +15,9 @@ Symbol* readKey(const char* key_path)
 			{
 				Symbol symbol;
 				symbol.character = (Character) i;
+				symbol.code = line;
 				
-				if (CODE_SIZE - line.length())
-					for (int j = 0; j < line.length(); j++)
-						symbol.code[j] = line.at(j);
-				else
-					std::cout << "The code specified in key file is bigger then maximum allowed length." << std::endl;
-				
-				symbols[i] = symbol;
+				symbols.push_back(symbol);
 			}
 			else
 				std::cout << "Invalid key file." << std::endl;
@@ -31,6 +27,8 @@ Symbol* readKey(const char* key_path)
   	}
   	else 
 	  std::cout << "Unable to open file" << std::endl;
+	
+	return symbols;
 }
 
 void createKey(const char* key_path)

@@ -2,8 +2,6 @@
 
 #include <string>
 
-#define CODE_SIZE 16
-
 enum Character
 {
 	a,		b,		c,		d,
@@ -18,7 +16,5 @@ enum Character
 struct Symbol
 {
 	Character character;
-	//const char* code;
-	//std::string code;
-	char code[CODE_SIZE];
+	std::string code;
 };
