@@ -2,7 +2,7 @@
 
 #include <string>
 
-enum Character
+/*enum Character
 {
 	a,		b,		c,		d,
 	e,		f,		g,		h,
@@ -11,10 +11,12 @@ enum Character
 	q,		r,		s,		t,
 	u,		v,		w,		x,
 	y,		z
-};
+};*/
 
 struct Symbol
 {
-	Character character;
+	//Character character;
+
+	char character;
 	std::string code;
 };

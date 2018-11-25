@@ -88,6 +88,44 @@ int main(int argc, char** argv)
 	{
 		std::vector<Symbol> symbols;
 		symbols = readKey(key.c_str());
+		if (symbols.size() < 62)
+			return 1;
+
+		for (int i = 0; i < 62; i++)
+			std::cout << symbols.at(i).character << " - " << symbols.at(i).code << std::endl;
+
+		for (int i = 0; i < text.length(); i++)
+		{
+
+		}
+	}
+
+	else if (operation == DECRYPT)
+	{
+		std::vector<Symbol> symbols;
+		symbols = readKey(key.c_str());
+		if (symbols.size() < 26)
+			return 1;
+
+		for (int i = 0; i < 26; i++)
+			std::cout << symbols.at(i).code << std::endl;
+	}
+
+	else if (operation == CREATE_KEY)
+	{
+		std::vector<Symbol> symbols;
+		symbols = readKey(key.c_str());
+		if (symbols.size() < 26)
+			return 1;
+
+		for (int i = 0; i < 26; i++)
+			std::cout << symbols.at(i).code << std::endl;
+	}
+
+	else if (operation == HELP)
+	{
+		std::vector<Symbol> symbols;
+		symbols = readKey(key.c_str());
 		if (symbols.size() < 26)
 			return 1;
 
