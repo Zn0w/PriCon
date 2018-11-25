@@ -91,13 +91,26 @@ int main(int argc, char** argv)
 		if (symbols.size() < 62)
 			return 1;
 
+		std::string encrypted_text = "";
+		
 		for (int i = 0; i < 62; i++)
 			std::cout << symbols.at(i).character << " - " << symbols.at(i).code << std::endl;
 
 		for (int i = 0; i < text.length(); i++)
 		{
-
+			for (int j = 0; j < symbols.size(); j++)
+			{
+				if (symbols.at(j).character == text.at(i))
+				{
+					encrypted_text += symbols.at(j).code + " ";
+					break;
+				}
+			}
 		}
+
+		encrypted_text += "."; // Needed for future decryption (means end of text)
+
+		std::cout << "Encrypted text: " << encrypted_text << std::endl;
 	}
 
 	else if (operation == DECRYPT)
