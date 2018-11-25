@@ -39,8 +39,11 @@ std::vector<Symbol> readKey(const char* key_path)
 				else if (i < 36)
 					symbol.character = (char) ((i - 10) + 65);
 				// Get lowercase letters
-				else
+				else if (i < 62)
 					symbol.character = (char) ((i - 36) + 97);
+				// Get SPACE
+				else
+					symbol.character = (char) ((i - 62) + 32);
 
 				symbol.code = line;
 

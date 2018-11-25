@@ -2,7 +2,7 @@
 
 #include <string>
 
-#define CHAR_AMOUNT 62
+#define CHAR_AMOUNT 63
 
 struct Symbol
 {
