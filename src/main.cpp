@@ -108,7 +108,7 @@ int main(int argc, char** argv)
 			}
 		}
 
-		encrypted_text += "."; // Needed for future decryption (means end of text)
+		encrypted_text += " "; // Needed for future decryption
 
 		std::cout << "Encrypted text: " << encrypted_text << std::endl;
 	}
@@ -117,21 +117,45 @@ int main(int argc, char** argv)
 	{
 		std::vector<Symbol> symbols;
 		symbols = readKey(key.c_str());
-		if (symbols.size() < 26)
+		if (symbols.size() < CHAR_AMOUNT)
 			return 1;
 
-		for (int i = 0; i < 26; i++)
-			std::cout << symbols.at(i).code << std::endl;
+		std::string decrypted_text = "";
+		std::string encrypted_char = "";
+		
+		for (int i = 0; i < CHAR_AMOUNT; i++)
+			std::cout << symbols.at(i).character << " - " << symbols.at(i).code << std::endl;
+
+		for (int i = 0; i < text.length(); i++)
+		{
+			if (text.at(i) == ' ')
+			{
+				for (int j = 0; j < symbols.size(); j++)
+				{
+					if (symbols.at(j).code == encrypted_char)
+					{
+						decrypted_text += symbols.at(j).character;
+						break;
+					}
+				}
+
+				encrypted_char = "";
+			}
+			else
+				encrypted_char += text.at(i);
+		}
+
+		std::cout << "Decrypted text: " << decrypted_text << std::endl;
 	}
 
 	else if (operation == CREATE_KEY)
 	{
 		std::vector<Symbol> symbols;
 		symbols = readKey(key.c_str());
-		if (symbols.size() < 26)
+		if (symbols.size() < CHAR_AMOUNT)
 			return 1;
 
-		for (int i = 0; i < 26; i++)
+		for (int i = 0; i < CHAR_AMOUNT; i++)
 			std::cout << symbols.at(i).code << std::endl;
 	}
 

@@ -2,21 +2,10 @@
 
 #include <string>
 
-/*enum Character
-{
-	a,		b,		c,		d,
-	e,		f,		g,		h,
-	i,		j,		k,		l,
-	m,		n,		o,		p,
-	q,		r,		s,		t,
-	u,		v,		w,		x,
-	y,		z
-};*/
+#define CHAR_AMOUNT 62
 
 struct Symbol
 {
-	//Character character;
-
 	char character;
 	std::string code;
 };
