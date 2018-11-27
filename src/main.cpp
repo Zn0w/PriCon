@@ -2,9 +2,13 @@
 #include <string>
 #include <string.h>
 
+#include <windows.h>
+
 #include "operation.h"
 
 #include "file_io/key_file_io.h"
+
+void copyToClipboard(char* text, int text_length);
 
 int main(int argc, char** argv)
 {
@@ -110,6 +114,9 @@ int main(int argc, char** argv)
 
 		encrypted_text += " "; // Needed for future decryption
 
+		// TODO: call this function only if on windows (at least for now)
+		copyToClipboard((char*) encrypted_text.c_str(), encrypted_text.length());
+
 		std::cout << "Encrypted text: " << encrypted_text << std::endl;
 	}
 
@@ -161,14 +168,33 @@ int main(int argc, char** argv)
 
 	else if (operation == HELP)
 	{
-		std::vector<Symbol> symbols;
-		symbols = readKey(key.c_str());
-		if (symbols.size() < 26)
-			return 1;
-
-		for (int i = 0; i < 26; i++)
-			std::cout << symbols.at(i).code << std::endl;
+		
 	}
 	
 	return 0;
+}
+
+void copyToClipboard(char* text, int text_length)
+{
+   	if (!OpenClipboard(NULL))
+   	{
+	   	std::cout << "Failed to copy text to the clipboard. (OpenClipboard - returned false)" << std::endl;
+	   	return;
+   	}
+
+   	if (!EmptyClipboard())
+   	{
+	   	std::cout << "Failed to copy text to the clipboard. (EmptyClipboard - returned false)" << std::endl;
+	   	return;
+   	}
+
+   	HGLOBAL clipboard_data = GlobalAlloc(GMEM_DDESHARE, text_length + 1);
+   	strcpy((char*) clipboard_data, text);
+	if (SetClipboardData(CF_TEXT, clipboard_data))
+		CloseClipboard();
+	else
+	{
+		CloseClipboard();
+		GlobalFree(clipboard_data);
+	}
 }
