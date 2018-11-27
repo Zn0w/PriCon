@@ -60,7 +60,7 @@ int main(int argc, char** argv)
 
 		else
 		{
-			std::cout << "No such kind of command." << std::endl;
+			std::cout << "No such kind of command. ($ pricon h - to show the list of commands)" << std::endl;
 			return 1;
 		}
 	}
@@ -69,6 +69,8 @@ int main(int argc, char** argv)
 		std::cout << "Please, provide at least one argument. ($ pricon h - to show the list of commands)" << std::endl;
 
 
+	// TODO: Delete this part of the code (used for debugging)
+	
 	//char* operation_str;
 	std::string operation_str;
 	if (operation == ENCRYPT)
@@ -157,18 +159,16 @@ int main(int argc, char** argv)
 
 	else if (operation == CREATE_KEY)
 	{
-		std::vector<Symbol> symbols;
-		symbols = readKey(key.c_str());
-		if (symbols.size() < CHAR_AMOUNT)
-			return 1;
-
-		for (int i = 0; i < CHAR_AMOUNT; i++)
-			std::cout << symbols.at(i).code << std::endl;
+		
 	}
 
 	else if (operation == HELP)
 	{
-		
+		std::cout << "pricon e key.txt 'Hello :)'           - encrypt using key.txt a message 'Hello :)'" << std::endl;
+		std::cout << "pricon d key.txt 'ar45 Gtt7 co09 '    - decrypt using key.txt an encrypted message ar45,Gtt7,co09." << std::endl;
+		std::cout << "pricon c                              - randomly generate a key file in the current folder named 'key.txt'" << std::endl;
+		std::cout << "pricon c keys/mykey.txt               - randomly generate a key file in the 'keys' folder named 'mykey.txt'" << std::endl;
+		std::cout << "pricon h                              - show the list of all the available commands" << std::endl;
 	}
 	
 	return 0;
@@ -196,5 +196,6 @@ void copyToClipboard(char* text, int text_length)
 	{
 		CloseClipboard();
 		GlobalFree(clipboard_data);
+		std::cout << "Failed to copy text to the clipboard. (SetClipboardData - failed)" << std::endl;
 	}
 }
