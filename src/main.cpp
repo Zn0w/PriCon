@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <string.h>
+#include <cstdlib>
+#include <ctime>
 
 #include <windows.h>
 
@@ -159,7 +161,20 @@ int main(int argc, char** argv)
 
 	else if (operation == CREATE_KEY)
 	{
+		std::string key_content;
 		
+		srand(time(0));
+		int length_of_code = rand() % (10 - 4 + 1) + 4;
+		for (int i = 0; i < CHAR_AMOUNT; i++)
+		{
+			for (int j = 0; j < length_of_code; j++)
+				key_content += (char) (rand() % (126 - 35 + 1) + 35);
+			
+			if (i != (CHAR_AMOUNT - 1))
+				key_content += "\n";
+		}
+
+		createKey(key.c_str(), key_content);
 	}
 
 	else if (operation == HELP)

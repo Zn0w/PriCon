@@ -65,7 +65,19 @@ std::vector<Symbol> readKey(const char* key_path)
 	return symbols;
 }
 
-void createKey(const char* key_path)
+void createKey(const char* key_path, std::string key)
 {
+	std::ofstream key_file;
+	key_file.open (key_path);
+	
+	if (!key_file.is_open())
+	{
+		std::cout << "Failed to open a key file at " << key_path << std::endl;
+		return;
+	}
 
+	key_file << key;
+	key_file.close();
+
+	std::cout << "Successfully created a key file at " << key_path << std::endl;
 }

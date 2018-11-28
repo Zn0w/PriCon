@@ -10,4 +10,4 @@
 
 std::vector<Symbol> readKey(const char* key_path);
 
-void createKey(const char* key_path);
+void createKey(const char* key_path, std::string key);
