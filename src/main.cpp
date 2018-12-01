@@ -4,7 +4,14 @@
 #include <cstdlib>
 #include <ctime>
 
+
+#ifdef _WIN32
+
 #include <windows.h>
+#define ON_WINDOWS
+
+#endif
+
 
 #include "operation.h"
 
@@ -21,18 +28,12 @@ int main(int argc, char** argv)
 	//			pricon c keys/mykey.txt				- randomly generate a key file in the "keys" folder named "mykey.txt"
 	//			pricon h							- show the list of all the available commands
 	
-	std::cout << argc << std::endl;//fg
-	
 	Operation operation;
-	//char* key;
-	//char* text;
 	std::string key;
 	std::string text;
 	
 	if (argc > 1)
 	{
-		std::cout << argv[1] << std::endl;
-		
 		if ((!strcmp(argv[1], "e") || !strcmp(argv[1], "d")) && argc == 4)
 		{
 			if (!strcmp(argv[1], "e"))
@@ -71,25 +72,6 @@ int main(int argc, char** argv)
 		std::cout << "Please, provide at least one argument. ($ pricon h - to show the list of commands)" << std::endl;
 
 
-	// TODO: Delete this part of the code (used for debugging)
-	
-	//char* operation_str;
-	std::string operation_str;
-	if (operation == ENCRYPT)
-		operation_str = "encrypt";
-	else if (operation == DECRYPT)
-		operation_str = "encrypt";
-	else if (operation == CREATE_KEY)
-		operation_str = "encrypt";
-	else if (operation == HELP)
-		operation_str = "help";
-	else
-		operation_str = "null";
-
-	std::cout << "Operation: " << operation_str << std::endl;
-	std::cout << "Key:       " << key << std::endl;
-	std::cout << "Text:      " << text << std::endl;
-
 	// Handle operations
 
 	if (operation == ENCRYPT)
@@ -100,9 +82,6 @@ int main(int argc, char** argv)
 			return 1;
 
 		std::string encrypted_text = "";
-		
-		for (int i = 0; i < 62; i++)
-			std::cout << symbols.at(i).character << " - " << symbols.at(i).code << std::endl;
 
 		for (int i = 0; i < text.length(); i++)
 		{
@@ -133,9 +112,6 @@ int main(int argc, char** argv)
 
 		std::string decrypted_text = "";
 		std::string encrypted_char = "";
-		
-		for (int i = 0; i < CHAR_AMOUNT; i++)
-			std::cout << symbols.at(i).character << " - " << symbols.at(i).code << std::endl;
 
 		for (int i = 0; i < text.length(); i++)
 		{
@@ -191,26 +167,37 @@ int main(int argc, char** argv)
 
 void copyToClipboard(char* text, int text_length)
 {
-   	if (!OpenClipboard(NULL))
-   	{
-	   	std::cout << "Failed to copy text to the clipboard. (OpenClipboard - returned false)" << std::endl;
-	   	return;
-   	}
-
-   	if (!EmptyClipboard())
-   	{
-	   	std::cout << "Failed to copy text to the clipboard. (EmptyClipboard - returned false)" << std::endl;
-	   	return;
-   	}
-
-   	HGLOBAL clipboard_data = GlobalAlloc(GMEM_DDESHARE, text_length + 1);
-   	strcpy((char*) clipboard_data, text);
-	if (SetClipboardData(CF_TEXT, clipboard_data))
-		CloseClipboard();
-	else
+   	// Auto copy feature is fro now implemented for windows only
+	#ifdef ON_WINDOWS
 	{
-		CloseClipboard();
-		GlobalFree(clipboard_data);
-		std::cout << "Failed to copy text to the clipboard. (SetClipboardData - failed)" << std::endl;
+	
+		if (!OpenClipboard(NULL))
+   		{
+		   	std::cout << "Failed to copy text to the clipboard. (OpenClipboard - returned false)" << std::endl;
+		   	return;
+   		}
+
+   		if (!EmptyClipboard())
+   		{
+		   	std::cout << "Failed to copy text to the clipboard. (EmptyClipboard - returned false)" << std::endl;
+		   	return;
+   		}
+
+   		HGLOBAL clipboard_data = GlobalAlloc(GMEM_DDESHARE, text_length + 1);
+   		strcpy((char*) clipboard_data, text);
+		if (SetClipboardData(CF_TEXT, clipboard_data))
+			CloseClipboard();
+		else
+		{
+			CloseClipboard();
+			GlobalFree(clipboard_data);
+			std::cout << "Failed to copy text to the clipboard. (SetClipboardData - failed)" << std::endl;
+		}
 	}
+	
+	#else
+		std::cout << "Now on windows." << std::endl;
+
+	#endif
+
 }

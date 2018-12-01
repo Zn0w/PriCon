@@ -3,29 +3,12 @@
 std::vector<Symbol> readKey(const char* key_path)
 {
 	std::vector<Symbol> symbols;
-	symbols.reserve(CHAR_AMOUNT); // For now it's 26 (the amount of letters in the alpabet), but it will be bigger because of numbers, special symbols, etc
+	symbols.reserve(CHAR_AMOUNT);
 	
 	std::string line;
   	std::ifstream file_reader(key_path);
   	if (file_reader.is_open())
   	{
-    	/*for (int i = 0; i < 26; i++)
-    	{
-			if (getline(file_reader,line))
-			{
-				Symbol symbol;
-				symbol.character = (Character) i;
-				symbol.code = line;
-				
-				symbols.push_back(symbol);
-			}
-			else
-				std::cout << "Invalid key file." << std::endl;
-    	}*/
-
-		int i = 0;
-		
-		// Get Uppercase letters, lowercase letters, numbers
 		for (int i = 0; i < CHAR_AMOUNT; i++)
 		{
 			if (getline(file_reader,line))
